@@ -59,47 +59,5 @@ public class UserResource {
         return Response.ok(new Gson().toJson(responseJson)).build();
 
     }
-
-    //Just to verify if the database is setup
-    
-    
-    
-    @GET
-    @Path("all")
-    @Produces({MediaType.APPLICATION_JSON})
-    public List<User> getAllUsers() {
-        List<User> allUsers = USER_FACADE.getAllUsers();
-        return allUsers;
-    }
-    
-    
-    
-   
-    
-    
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("amount")
-    public String getUserAmount() {
-
-        EntityManager em = EMF.createEntityManager();
-        try {
-            TypedQuery<User> query = em.createQuery ("select u from User u",entities.User.class);
-            List<User> users = query.getResultList();
-            return "[" + users.size() + "]";
-        } finally {
-            em.close();
-        }
-    }
-
-   
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("admin")
-    @RolesAllowed("admin")
-    public String getFromAdmin() {
-        String thisuser = securityContext.getUserPrincipal().getName();
-        return "{\"msg\": \"Hello to (admin) User: " + thisuser + "\"}";
-    }
+ 
 }
