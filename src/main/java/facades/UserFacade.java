@@ -5,7 +5,7 @@ import entities.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import security.errorhandling.AuthenticationException;
 import utils.EMF_Creator;
 
@@ -93,5 +93,23 @@ public class UserFacade {
 
     }
     
+    
+    public String getUserAmount() {
+       EntityManager em = emf.createEntityManager();;
+        try {
+            TypedQuery<User> query = em.createQuery ("select u from User u",entities.User.class);
+            List<User> users = query.getResultList();
+            return "[" + users.size() + "]";
+        } finally {
+            em.close();
+    
+        
+    }
+    
+    
+    
+    
    
+}
+    
 }

@@ -81,10 +81,22 @@ public class UserResource {
     @Path("all")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public List<User> getAllMembers() {
-        List<User> allMembers = USER_FACADE.getAllUsers();
-        return allMembers;
+    public List<User> getAllUsers() {
+        List<User> allUsers = USER_FACADE.getAllUsers();
+        return allUsers;
     }
     
     
-}
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("amount")
+    public String amountUsers() {
+        String userAmount = USER_FACADE.getUserAmount();
+        return userAmount;
+    }
+    
+    
+    
+    }
+    
+    
