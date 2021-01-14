@@ -20,19 +20,32 @@ import javax.ws.rs.core.Response;
 import security.errorhandling.AuthenticationException;
 import utils.EMF_Creator;
 
-
+/**
+ * REST Web Service
+ *
+ * @author magda
+ */
 @Path("user")
 public class UserResource {
-    
+
+    public static final int TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //30 min
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     public static final UserFacade USER_FACADE = UserFacade.getUserFacade(EMF);
-  
+
     @Context
     private UriInfo context;
 
+    /**
+     * Creates a new instance of UserResource
+     */
     public UserResource() {
     }
 
+    /**
+     * Retrieves representation of an instance of rest.UserResource
+     *
+     * @return an instance of java.lang.String
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -55,5 +68,14 @@ public class UserResource {
         return Response.ok(new Gson().toJson(responseJson)).build();
 
     }
- 
+    
+    @Path("all")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<User> getAllMembers() {
+        List<User> allMembers = USER_FACADE.getAllUsers();
+        return allMembers;
+    }
+   
+    
 }
