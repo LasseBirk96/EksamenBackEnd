@@ -27,7 +27,6 @@
             
         </properties>
     </persistence-unit>
-    
     <!-- Database for testing ONLY -->
     <persistence-unit name="puTest" transaction-type="RESOURCE_LOCAL">
         <!-- DO NOT RENAME THE PERSISTENCE UNIT -->
