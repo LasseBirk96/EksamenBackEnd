@@ -58,6 +58,26 @@ public class UserResource {
 
     }
     
+    
+    @Path("delete")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeUser(String jsonString) throws AuthenticationException, API_Exception {
+        String username;
+        try {
+            JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
+            username = json.get("username").getAsString();
+        }
+        catch (Exception e) {
+             throw new API_Exception("Malformed JSON Suplied", 400, e);
+        }
+        User user = USER_FACADE.deleteUser(username);
+        JsonObject responseJson = new JsonObject();
+        responseJson.addProperty("username", username);
+        return Response.ok(new Gson().toJson(responseJson)).build();
+    }
+    
     @Path("all")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
