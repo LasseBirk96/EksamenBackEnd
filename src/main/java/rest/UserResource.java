@@ -30,7 +30,8 @@ public class UserResource {
     @Context
     private UriInfo context;
 
-
+    public UserResource() {
+    }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
