@@ -25,7 +25,7 @@ import security.errorhandling.AuthenticationException;
 import utils.EMF_Creator;
 
 
-@Path("info")
+@Path("user")
 public class UserResource {
     
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
@@ -92,14 +92,7 @@ public class UserResource {
         }
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("user")
-    @RolesAllowed("user")
-    public String getFromUser() {
-        String thisuser = securityContext.getUserPrincipal().getName();
-        return "{\"msg\": \"Hello to User: " + thisuser + "\"}";
-    }
+   
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
