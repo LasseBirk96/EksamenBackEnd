@@ -3,6 +3,7 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import entities.Role;
 import entities.User;
 import errorhandling.API_Exception;
 import facades.UserFacade;
@@ -20,11 +21,6 @@ import javax.ws.rs.core.Response;
 import security.errorhandling.AuthenticationException;
 import utils.EMF_Creator;
 
-/**
- * REST Web Service
- *
- * @author magda
- */
 @Path("user")
 public class UserResource {
 
@@ -35,17 +31,10 @@ public class UserResource {
     @Context
     private UriInfo context;
 
-    /**
-     * Creates a new instance of UserResource
-     */
+    
     public UserResource() {
     }
 
-    /**
-     * Retrieves representation of an instance of rest.UserResource
-     *
-     * @return an instance of java.lang.String
-     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -76,6 +65,15 @@ public class UserResource {
         List<User> allMembers = USER_FACADE.getAllUsers();
         return allMembers;
     }
+    
+    @Path("roles")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Role> getAllRoles() {
+        List<Role> allRoles = USER_FACADE.getAllRoles();
+        return allRoles;
+    }
+    
    
     
 }

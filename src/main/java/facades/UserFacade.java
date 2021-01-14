@@ -9,9 +9,7 @@ import javax.persistence.Query;
 import security.errorhandling.AuthenticationException;
 import utils.EMF_Creator;
 
-/**
- * @author lam@cphbusiness.dk
- */
+
 public class UserFacade {
 
     private static EntityManagerFactory emf;
@@ -20,11 +18,6 @@ public class UserFacade {
     private UserFacade() {
     }
 
-    /**
-     *
-     * @param _emf
-     * @return the instance of this facade.
-     */
     public static UserFacade getUserFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
@@ -34,22 +27,24 @@ public class UserFacade {
     }
 
     public User getVeryfiedUser(String username, String password) throws AuthenticationException {
-          EntityManager em ;
-try{        em = emf.createEntityManager();}catch (NullPointerException e){
-    emf=EMF_Creator.createEntityManagerFactory();
-    em=emf.createEntityManager();
-}
-        User user;
+        EntityManager em; 
         try {
-            user = em.find(User.class, username);
-            if (user == null || !user.verifyPassword(password)) {
-                throw new AuthenticationException("Invalid user name or password");
-            }
-        } finally {
-            em.close();
+            em = emf.createEntityManager();
+        } catch (NullPointerException e){
+        emf=EMF_Creator.createEntityManagerFactory();
+        em=emf.createEntityManager();
         }
-        return user;
-    }
+            User user;
+            try {
+                user = em.find(User.class, username);
+                if (user == null || !user.verifyPassword(password)) {
+                    throw new AuthenticationException("Invalid user name or password");
+                }
+            } finally {
+                em.close();
+            }
+            return user;
+        }
 
     public User addUser(String name, String password) throws AuthenticationException {
         EntityManager em = emf.createEntityManager();
@@ -57,7 +52,7 @@ try{        em = emf.createEntityManager();}catch (NullPointerException e){
         try {
             user = em.find(User.class, name);
             if (user != null) {
-                throw new AuthenticationException("Username allready exist, try different one");
+                throw new AuthenticationException("Username already exist, try different one");
             } else {
                 user = new User(name, password);
                 user.addRole(em.find(Role.class, "user"));
@@ -70,15 +65,24 @@ try{        em = emf.createEntityManager();}catch (NullPointerException e){
         }
         return user;
     }
-
     public List<User> getAllUsers() {
         EntityManager em = emf.createEntityManager();
         try {
-            // Query query = em.createQuery("SELECT u from users u". User.class);
-
             List<User> allUsers = em.createQuery("SELECT u.userName from User u", User.class)
-                    .getResultList();
+            .getResultList();
             return allUsers;
+        } finally {
+            em.close();
+        }
+
+    }
+    
+    public List<Role> getAllRoles() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            List<Role> allRoles = em.createQuery("SELECT u.roleName from Role u", Role.class)
+            .getResultList();
+            return allRoles;
         } finally {
             em.close();
         }
