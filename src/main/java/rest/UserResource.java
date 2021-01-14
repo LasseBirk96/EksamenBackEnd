@@ -66,14 +66,5 @@ public class UserResource {
         return allMembers;
     }
     
-    @Path("roles")
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    public List<Role> getAllRoles() {
-        List<Role> allRoles = USER_FACADE.getAllRoles();
-        return allRoles;
-    }
-    
-   
     
 }

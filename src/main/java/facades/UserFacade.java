@@ -77,15 +77,5 @@ public class UserFacade {
 
     }
     
-    public List<Role> getAllRoles() {
-        EntityManager em = emf.createEntityManager();
-        try {
-            List<Role> allRoles = em.createQuery("SELECT u.roleName from Role u", Role.class)
-            .getResultList();
-            return allRoles;
-        } finally {
-            em.close();
-        }
-
-    }
+   
 }
