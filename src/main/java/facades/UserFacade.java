@@ -69,14 +69,6 @@ public class UserFacade {
            TypedQuery<User> query = em.createNamedQuery("users.deleteUser", User.class);
              User p = query.getSingleResult();
             
-            try {
-                em.getTransaction().begin();
-                em.remove(p);
-                em.getTransaction().commit();
-            } finally {
-                em.close();
-            }
-        
         return p;
     }
      
