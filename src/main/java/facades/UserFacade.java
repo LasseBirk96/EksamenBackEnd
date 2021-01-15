@@ -66,7 +66,7 @@ public class UserFacade {
      public User deleteUser(String name) {
         EntityManager em = emf.createEntityManager();
         
-           TypedQuery<User> query = em.createNamedQuery("User.deleteUser", User.class);
+           TypedQuery<User> query = em.createNamedQuery("users.deleteUser", User.class);
              User p = query.getSingleResult();
             
             try {
