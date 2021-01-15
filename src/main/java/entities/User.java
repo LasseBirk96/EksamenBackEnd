@@ -27,6 +27,13 @@ public class User implements Serializable {
     @Column(name = "user_id")
     private long id;
     
+    
+    @Column(name = "user_email", length = 25)
+    private String email;
+
+    
+    
+    
     @Column(name = "user_name", length = 25)
     private String userName;
     @Basic(optional = false)
@@ -63,11 +70,21 @@ public class User implements Serializable {
     }
   
 
-    public User(String userName, String userPass) {
-        
+    public User(String userName, String userPass, String email) {
         this.userName = userName;
         this.userPass = BCrypt.hashpw(userPass, BCrypt.gensalt(12));
-        
+        this.email = email;
+    }
+    
+    
+    
+    
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUserName() {

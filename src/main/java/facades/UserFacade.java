@@ -46,7 +46,7 @@ public class UserFacade {
             return user;
         }
 
-    public User addUser(String name, String password) throws AuthenticationException {
+    public User addUser(String name, String password, String email) throws AuthenticationException {
         EntityManager em = emf.createEntityManager();
         User user;
         try {
@@ -54,7 +54,7 @@ public class UserFacade {
             if (user != null) {
                 throw new AuthenticationException("Username already exist, try different one");
             } else {
-                user = new User(name, password);
+                user = new User(name, password, email);
                 user.addRole(em.find(Role.class, "user"));
                 em.getTransaction().begin();
                 em.persist(user);
