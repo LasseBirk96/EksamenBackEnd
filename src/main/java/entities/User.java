@@ -12,28 +12,32 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.mindrot.jbcrypt.BCrypt;
 
+
+@NamedQueries({
+    @NamedQuery(name = "users.getUserByName", query = "SELECT u FROM users WHERE u.name = :name")
+})
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
-
+    
+    
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private long id;
-    
-    
+   
     @Column(name = "user_email", length = 25)
     private String email;
 
-    
-    
-    
     @Column(name = "user_name", length = 25)
     private String userName;
     @Basic(optional = false)

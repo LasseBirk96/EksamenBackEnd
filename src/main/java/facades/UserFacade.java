@@ -50,16 +50,13 @@ public class UserFacade {
         EntityManager em = emf.createEntityManager();
         User user;
         try {
-            user = em.find(User.class, name);
-            if (user != null) {
-                throw new AuthenticationException("Username already exist, try different one");
-            } else {
+   
                 user = new User(name, password, email);
                 user.addRole(em.find(Role.class, "user"));
                 em.getTransaction().begin();
                 em.persist(user);
                 em.getTransaction().commit();
-            }
+            
         } finally {
             em.close();
         }
