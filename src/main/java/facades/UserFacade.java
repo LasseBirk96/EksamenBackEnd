@@ -63,20 +63,21 @@ public class UserFacade {
     }
     
     
-     public User deleteUser(Long id) {
+     public User deleteUser(String name) {
         EntityManager em = emf.createEntityManager();
         
-          User user;
-          user = em.find(User.class, id);
+           TypedQuery<User> query = em.createNamedQuery("User.deleteUser", User.class);
+             User p = query.getSingleResult();
+            
             try {
                 em.getTransaction().begin();
-                em.remove(user);
+                em.remove(p);
                 em.getTransaction().commit();
             } finally {
                 em.close();
             }
         
-        return user;
+        return p;
     }
      
      

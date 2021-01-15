@@ -66,17 +66,17 @@ public class UserResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response removeUser(String jsonString) throws AuthenticationException, API_Exception {
-        Long id;
+        String username;
         try {
             JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
-            id = json.get("id").getAsLong();
+            username = json.get("username").getAsString();
         }
         catch (Exception e) {
              throw new API_Exception("Malformed JSON Suplied", 400, e);
         }
-        User user = USER_FACADE.deleteUser(id);
+        User user = USER_FACADE.deleteUser(username);
         JsonObject responseJson = new JsonObject();
-        responseJson.addProperty("id", id);
+        responseJson.addProperty("username", username);
         return Response.ok(new Gson().toJson(responseJson)).build();
     }
     
