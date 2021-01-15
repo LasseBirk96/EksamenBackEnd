@@ -12,8 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+
 
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -22,9 +21,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 
 @Entity
-@NamedQueries({
-    @NamedQuery(name = "User.deleteUser", query = "DELETE u FROM users WHERE u.user_name u =:name")
-})
+
 
  
 @Table(name = "users")
