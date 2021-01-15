@@ -24,7 +24,7 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "user_id")
     private long id;
     
     @Column(name = "user_name", length = 25)
@@ -35,7 +35,7 @@ public class User implements Serializable {
     @Column(name = "user_pass")
     private String userPass;
     @JoinTable(name = "user_roles", joinColumns = {
-        @JoinColumn(name = "id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "id", referencedColumnName = "user_id")}, inverseJoinColumns = {
         @JoinColumn(name = "role_name", referencedColumnName = "role_name")})
     @ManyToMany
     
