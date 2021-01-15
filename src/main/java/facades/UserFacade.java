@@ -65,11 +65,15 @@ public class UserFacade {
     
      public User deleteUser(String name) {
         EntityManager em = emf.createEntityManager();
-        
-           TypedQuery<User> query = em.createQuery("DELETE FROM startcode.users WHERE u.userName = :name", User.class);
+        try {
+            TypedQuery<User> query = em.createQuery("DELETE FROM startcode.users WHERE .userName = :name", User.class);
             User p = query.getSingleResult();
-            
-        return p;
+            return p; 
+        }
+        finally{
+            em.close();
+        }
+        
     }
      
      
