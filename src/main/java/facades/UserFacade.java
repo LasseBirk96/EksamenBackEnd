@@ -50,7 +50,6 @@ public class UserFacade {
         EntityManager em = emf.createEntityManager();
         User user;
         try {
-   
                 user = new User(name, password, email);
                 user.addRole(em.find(Role.class, "user"));
                 em.getTransaction().begin();
