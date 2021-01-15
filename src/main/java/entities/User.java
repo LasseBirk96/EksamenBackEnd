@@ -23,7 +23,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "users.deleteUser", query = "DELETE a FROM User a WHERE a.user_name = :name")
+    @NamedQuery(name = "users.deleteUser", query = "DELETE a FROM User WHERE a.user_name = :name")
 })
 
  
