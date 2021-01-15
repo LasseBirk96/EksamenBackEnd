@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -21,8 +23,10 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private long id;
+    
     @Column(name = "user_name", length = 25)
     private String userName;
     @Basic(optional = false)
@@ -60,13 +64,22 @@ public class User implements Serializable {
   
 
     public User(String userName, String userPass) {
+        
         this.userName = userName;
-
         this.userPass = BCrypt.hashpw(userPass, BCrypt.gensalt(12));
+        
     }
 
     public String getUserName() {
         return userName;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setUserName(String userName) {

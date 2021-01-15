@@ -28,15 +28,25 @@ public class RenameMe implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getDummyStr3() {
+        return dummyStr3;
+    }
+
+    public void setDummyStr3(String dummyStr3) {
+        this.dummyStr3 = dummyStr3;
+    }
     
     // TODO, delete this class, or rename to an Entity class that makes sense for what you are about to do
     // Delete EVERYTHING below if you decide to use this class, it's dummy data used for the initial demo
     private String dummyStr1;
     private String dummyStr2;
+    private String dummyStr3;
 
-    public RenameMe(String dummyStr1, String dummyStr2) {
+    public RenameMe(String dummyStr1, String dummyStr2, String dummyStr3) {
         this.dummyStr1 = dummyStr1;
         this.dummyStr2 = dummyStr2;
+        this.dummyStr3 = dummyStr3;
     }
 
     public String getDummyStr1() {
