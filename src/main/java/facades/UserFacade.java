@@ -26,24 +26,25 @@ public class UserFacade {
         return instance;
     }
 
-    public User getVeryfiedUser(String username, String password) throws AuthenticationException {
-        EntityManager em = emf.createEntityManager();
+ 
     
+       public User getVeryfiedUser(String username, String password) throws AuthenticationException {
+        EntityManager em = emf.createEntityManager();
+   
         try {
+            
             em.getTransaction().begin();
             TypedQuery<User> query = em.createQuery("SELECT u.userName, u.userPass FROM User u WHERE u.userName = :username ", User.class);
             query.setParameter("username", username);
-            query.setParameter("password", password);
+            query.setParameter("userpass", password); 
             User user = query.getSingleResult();
-            
+            user.verifyPassword(password);
             return user;
             } finally {
                 em.close();
             }
           
         }
-    
-    
     
     
     public User findUser(Long id) {
