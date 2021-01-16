@@ -63,12 +63,12 @@ public class UserFacade {
     }
     
     
-    public User deleteUser(String name) {
+    public User deleteUser(Long userId) {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.userName = :username ", User.class);
-            query.setParameter("username", name);
+            TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.id = :id ", User.class);
+            query.setParameter("id", userId);
             User p = query.getSingleResult();
             em.remove(p);
             em.getTransaction().commit();
@@ -79,6 +79,9 @@ public class UserFacade {
         }
         
     }
+    
+    
+   
      
   
      
