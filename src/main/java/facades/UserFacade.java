@@ -67,7 +67,7 @@ public class UserFacade {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            TypedQuery<User> query = em.createQuery("SELECT u.user FROM users AS u WHERE u.user_name = :name ", User.class);
+            TypedQuery<User> query = em.createQuery("SELECT u FROM User AS u WHERE u.userName = :name ", User.class);
             User p = query.getSingleResult();
             em.remove(p);
             em.getTransaction().commit();
