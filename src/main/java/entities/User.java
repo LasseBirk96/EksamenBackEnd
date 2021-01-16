@@ -36,10 +36,10 @@ public class User implements Serializable {
     @Column(name = "user_id")
     private long id;
    
-    @Column(name = "user_email", length = 25)
+    @Column(name = "user_email")
     private String email;
 
-    @Column(name = "user_name", length = 25)
+    @Column(name = "user_name")
     private String userName;
     @Basic(optional = false)
     @NotNull

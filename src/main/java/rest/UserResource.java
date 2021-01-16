@@ -91,6 +91,12 @@ public class UserResource {
         
     }
     
+    // GET /users => find all users
+    // GET /users/:id => find user by supplied id
+    // POST /users => create new user
+    // DELETE /users/:id => delete user by supplied id
+    // PUT /users/:id => update user by supplied id, send json object with updates
+    
     @Path("delete")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
