@@ -45,6 +45,22 @@ public class UserFacade {
             }
             return user;
         }
+    
+    public User findUser(Long id) {
+        EntityManager em = emf.createEntityManager();
+        
+        try {
+            em.getTransaction().begin();
+            TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.id = :id ", User.class);
+            query.setParameter("id", id);
+            User user = query.getSingleResult();
+            
+            return user;
+        } 
+        finally {
+            em.close();
+        }
+    }
 
     public User addUser(String name, String password, String email) throws AuthenticationException {
         EntityManager em = emf.createEntityManager();
@@ -60,6 +76,21 @@ public class UserFacade {
             em.close();
         }
         return user;
+    }
+    
+    public User updateUser(User user) {
+        EntityManager em = emf.createEntityManager();
+        
+        try {
+            em.getTransaction().begin();
+            em.persist(user);
+            em.getTransaction().commit();
+            
+            return user;
+        }
+        finally {
+            em.close();
+        }
     }
     
     
@@ -79,13 +110,6 @@ public class UserFacade {
         }
         
     }
-    
-    
-   
-     
-  
-     
-     
      
     public List<User> getAllUsers() {
         EntityManager em = emf.createEntityManager();

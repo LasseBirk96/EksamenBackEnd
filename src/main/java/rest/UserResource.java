@@ -15,6 +15,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -60,6 +61,35 @@ public class UserResource {
 
     }
     
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateUser(String jsonString) throws AuthenticationException, API_Exception {
+        
+        try {
+            JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
+            Long userId = json.get("id").getAsLong();
+            User user = USER_FACADE.findUser(userId);
+            
+            if (json.has("email")) {
+                user.setEmail(json.get("email").getAsString());
+            }
+            
+            if (json.has("username")) {
+                user.setUserName(json.get("username").getAsString());
+            }
+            
+            USER_FACADE.updateUser(user);
+                    
+            JsonObject responseJson = new JsonObject();
+            responseJson.addProperty("message", String.format("Successfully updated user %d", userId));
+            return Response.ok(new Gson().toJson(responseJson)).build();
+        }
+        catch (Exception e) {
+            return Response.status(400, "Malformed JSON supplied").build();
+        }
+        
+    }
     
     @Path("delete")
     @POST
