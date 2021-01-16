@@ -62,12 +62,13 @@ public class UserFacade {
         return user;
     }
     
-    //PRØV AT SELECT EN DUDE OG SÅ BRUG EM.REMOVE TIL AT FJERNE HAM
-     public User deleteUser(String name) {
+    
+    public User deleteUser(String name) {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            TypedQuery<User> query = em.createQuery("SELECT u FROM User AS u WHERE u.userName = :username ", User.class);
+            TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.userName = :username ", User.class);
+            query.setParameter("username", name);
             User p = query.getSingleResult();
             em.remove(p);
             em.getTransaction().commit();
