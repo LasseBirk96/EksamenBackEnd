@@ -34,9 +34,8 @@ public class UserFacade {
         try {
             
             em.getTransaction().begin();
-            TypedQuery<User> query = em.createQuery("SELECT u.userName, u.userPass FROM User u WHERE u.userName = :username ", User.class);
+            TypedQuery<User> query = em.createQuery("SELECT u.userName, u.userPass FROM User u WHERE u.userName = :username", User.class);
             query.setParameter("username", username);
-            query.setParameter("userpass", password); 
             User user = query.getSingleResult();
             user.verifyPassword(password);
             return user;
