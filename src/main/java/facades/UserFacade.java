@@ -67,9 +67,9 @@ public class UserFacade {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            TypedQuery<User> query = em.createQuery("DELETE FROM startcode.users WHERE userName = :name ", User.class);
+            TypedQuery<User> query = em.createQuery("SELECT u.user FROM users AS u WHERE u.user_name = :name ", User.class);
             User p = query.getSingleResult();
-            query.executeUpdate();
+            em.remove(p);
             em.getTransaction().commit();
             return p; 
         }
@@ -79,6 +79,7 @@ public class UserFacade {
         
     }
      
+  
      
      
      
