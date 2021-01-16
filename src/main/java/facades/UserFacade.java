@@ -83,7 +83,7 @@ public class UserFacade {
         
         try {
             em.getTransaction().begin();
-            em.persist(user);
+            em.merge(user);
             em.getTransaction().commit();
             
             return user;
