@@ -46,11 +46,11 @@ public class UserFacade {
             return user;
         }
 
-    public User addUser(String name, String password, String email) throws AuthenticationException {
+    public User addUser(String name, String password) throws AuthenticationException {
         EntityManager em = emf.createEntityManager();
         User user;
         try {
-                user = new User(name, password, email);
+                user = new User(name, password);
                 user.addRole(em.find(Role.class, "user"));
                 em.getTransaction().begin();
                 em.persist(user);
@@ -62,12 +62,12 @@ public class UserFacade {
         return user;
     }
     
-    
+    //PRØV AT SELECT EN DUDE OG SÅ BRUG EM.REMOVE TIL AT FJERNE HAM
      public User deleteUser(String name) {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            TypedQuery<User> query = em.createQuery("DELETE FROM startcode.users WHERE userName = " + name, User.class);
+            TypedQuery<User> query = em.createQuery("DELETE FROM startcode.users WHERE userName = :name ", User.class);
             User p = query.getSingleResult();
             query.executeUpdate();
             em.getTransaction().commit();

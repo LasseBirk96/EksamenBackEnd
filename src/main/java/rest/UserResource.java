@@ -41,17 +41,17 @@ public class UserResource {
     public Response addUser(String jsonString) throws AuthenticationException, API_Exception {
         String username;
         String password;
-        String email;
+  
         try {
             JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
             username = json.get("username").getAsString();
             password = json.get("password").getAsString();
-            email = json.get("email").getAsString();
+     
         } catch (Exception e) {
             throw new API_Exception("Malformed JSON Suplied", 400, e);
         }
 
-        User user = USER_FACADE.addUser(username, password, email);
+        User user = USER_FACADE.addUser(username, password);
         JsonObject responseJson = new JsonObject();
         responseJson.addProperty("username", username);
         responseJson.addProperty("msg", "Welcome on board!");

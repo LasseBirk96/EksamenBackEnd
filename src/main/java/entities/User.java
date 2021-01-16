@@ -6,14 +6,14 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -23,29 +23,20 @@ import org.mindrot.jbcrypt.BCrypt;
 
 @Entity
 
-
- 
-@Table(name = "users")
 public class User implements Serializable {
-    
     
     
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private long id;
-   
-    @Column(name = "user_email", length = 25)
-    private String email;
 
-    @Column(name = "user_name", length = 25)
+    private long id;
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Email> emails;
+   
     private String userName;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "user_pass")
-    private String userPass;
+    private String userPassword;
     @JoinTable(name = "user_roles", joinColumns = {
         @JoinColumn(name = "id", referencedColumnName = "user_id")}, inverseJoinColumns = {
         @JoinColumn(name = "role_name", referencedColumnName = "role_name")})
@@ -71,27 +62,21 @@ public class User implements Serializable {
 
     //TODO Change when password is hashed
     public boolean verifyPassword(String password) {
-        return BCrypt.checkpw(password, this.userPass);
+        return BCrypt.checkpw(password, this.userPassword);
     }
   
 
-    public User(String userName, String userPass, String email) {
+    public User(String userName, String userPassword) {
         this.userName = userName;
-        this.userPass = BCrypt.hashpw(userPass, BCrypt.gensalt(12));
-        this.email = email;
+        this.userPassword = BCrypt.hashpw(userPassword, BCrypt.gensalt(12));
+    
     }
     
     
     
     
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
+   
     public String getUserName() {
         return userName;
     }
@@ -108,12 +93,12 @@ public class User implements Serializable {
         this.userName = userName;
     }
 
-    public String getUserPass() {
-        return this.userPass;
+    public String getUserPassword() {
+        return this.userPassword;
     }
 
-    public void setUserPass(String userPass) {
-        this.userPass = BCrypt.hashpw(userPass, BCrypt.gensalt(12));
+    public void setUserPass(String userPassword) {
+        this.userPassword = BCrypt.hashpw(userPassword, BCrypt.gensalt(12));
     }
 
     public List<Role> getRoleList() {
