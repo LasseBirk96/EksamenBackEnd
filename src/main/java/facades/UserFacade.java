@@ -61,6 +61,20 @@ public class UserFacade {
             em.close();
         }
     }
+     public User updateUser(User user) {
+        EntityManager em = emf.createEntityManager();
+        
+        try {
+            em.getTransaction().begin();
+            em.merge(user);
+            em.getTransaction().commit();
+            
+            return user;
+        }
+        finally {
+            em.close();
+        }
+    }
 
     public User addUser(String name, String password, String email) throws AuthenticationException {
         EntityManager em = emf.createEntityManager();
@@ -78,20 +92,7 @@ public class UserFacade {
         return user;
     }
     
-    public User updateUser(User user) {
-        EntityManager em = emf.createEntityManager();
-        
-        try {
-            em.getTransaction().begin();
-            em.merge(user);
-            em.getTransaction().commit();
-            
-            return user;
-        }
-        finally {
-            em.close();
-        }
-    }
+   
     
     
     public User deleteUser(Long userId) {
